@@ -15,7 +15,6 @@ dependencies:
     sdk: flutter
   intl: ^0.18.1
 
-  flutter_gen: any
 dev_dependencies:
   bloc_test: ^9.1.6
   flutter_test:
