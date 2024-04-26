@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/application/counter/counter_cubit.dart';
+import 'package:flutter_template/application/counter/counter_bloc.dart';
 import 'package:flutter_template/presentation/core/l10n/l10n.dart';
 
 class CounterPage extends StatelessWidget {
@@ -9,7 +9,7 @@ class CounterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CounterCubit(),
+      create: (_) => CounterBloc(),
       child: const CounterView(),
     );
   }
@@ -29,12 +29,14 @@ class CounterView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () => context.read<CounterCubit>().increment(),
+            onPressed: () =>
+                context.read<CounterBloc>().add(const CounterEvent.increment()),
             child: const Icon(Icons.add),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
-            onPressed: () => context.read<CounterCubit>().decrement(),
+            onPressed: () =>
+                context.read<CounterBloc>().add(const CounterEvent.decrement()),
             child: const Icon(Icons.remove),
           ),
         ],
@@ -49,7 +51,7 @@ class CounterText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final count = context.select((CounterCubit cubit) => cubit.state);
+    final count = context.select((CounterBloc bloc) => bloc.state.value);
     return Text('$count', style: theme.textTheme.displayLarge);
   }
 }
